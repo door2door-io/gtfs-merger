@@ -4,7 +4,7 @@ A Python package to merge multiple GTFS files into one
 
 ## Installation
 ```shell
-python setup.py install
+pip install gtfsmerger
 ```
 
 ## Usage example
