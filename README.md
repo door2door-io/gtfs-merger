@@ -53,7 +53,7 @@ Note this package currently supports only Python2.7
 
 ### Setup
 ```shell
-virtualenv -p python2 venv
+virtualenv -p python3 venv
 source venv/bin/activate
 ```
 
