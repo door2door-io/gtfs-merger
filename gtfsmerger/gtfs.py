@@ -1,5 +1,6 @@
 from zipfile import ZipFile
-import StringIO
+from io import StringIO
+from io import BytesIO
 
 import pandas as pd
 
@@ -9,7 +10,7 @@ class GTFS(object):
     @staticmethod
     def to_dfs(gtfs_data):
         gtfs_obj = {}
-        zip_ref = ZipFile(gtfs_data)
+        zip_ref = ZipFile(gtfs_data.name)
 
         for filename in zip_ref.namelist():
             filelabel = filename.replace('.txt', '')
@@ -21,13 +22,13 @@ class GTFS(object):
     @staticmethod
     def to_zipfile(gtfs_obj, tables, fpath=None):
         if not fpath:
-            zip_buf = StringIO.StringIO()
+            zip_buf = BytesIO()
             zip_archive = ZipFile(zip_buf, mode='w')
         else:
             zip_archive = ZipFile(fpath, mode='w')
 
         for table_name in tables:
-            buff = StringIO.StringIO()
+            buff = StringIO()
             gtfs_obj[table_name].to_csv(buff, encoding='utf-8-sig')
             zip_archive.writestr(table_name + '.txt', buff.getvalue())
 

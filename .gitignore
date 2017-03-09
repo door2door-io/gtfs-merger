@@ -33,3 +33,6 @@ nosetests.xml
 
 # Sphinx
 docs/_build
+
+# Virtual env
+venv/

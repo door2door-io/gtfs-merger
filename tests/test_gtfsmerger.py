@@ -10,14 +10,14 @@ def test_gtfs_merger(gtfs_merger):
         u'0-n1510']
     z_p = gtfs_merger.get_zipfile()
 
-    assert z_p.namelist() == [
+    assert set(z_p.namelist()) == set([
         'agency.txt',
         'stop_times.txt',
         'stops.txt',
         'shapes.txt',
         'calendar_dates.txt',
         'routes.txt',
-        'trips.txt']
+        'trips.txt'])
 
 
 def test_mod_ids(gtfs_obj):
