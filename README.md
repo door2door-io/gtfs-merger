@@ -12,7 +12,7 @@ pip install gtfsmerger
 Use this module to merge two GTFS files
 ```python
 >>> from gtfsmerger import GTFSMerger
->>> with open('gtfs1.zip') as fa, open('gtfs2.zip') as fb:
+>>> with open('tests/test_gtfs.zip') as fa, open('tests/test_gtfs_2.zip') as fb:
 >>>    merged_gtfs = GTFSMerger(fa, fb)
 ```
 
@@ -27,7 +27,7 @@ that is a dictionary of the merged GTFS Pandas DataFrames.
 To list the GTFS Pandas DataFrames
 ```python
 >>> merged_gtfs.merged.keys()
-['agency', 'stop_times', 'stops', 'shapes', 'calendar_dates', 'routes', 'trips']
+dict_keys(['stops', 'stop_times', 'calendar_dates', 'shapes', 'agency', 'routes', 'trips'])
 ```
 
 To access the `stops` GTFS Pandas Dataframe
