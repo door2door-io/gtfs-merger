@@ -49,7 +49,7 @@ stop_id    stop_name  stop_desc   stop_lat    stop_lon stop_url  \
 ```
 
 ## Development
-Note this package currently supports only python3
+Note this package currently supports only Python3
 
 ### Setup
 ```shell
