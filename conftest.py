@@ -6,7 +6,7 @@ from gtfsmerger.gtfs import GTFS
 @pytest.fixture(scope="module")
 def gtfs_obj():
     gtfs = GTFS()
-    with open('tests/test_gtfs.zip', 'r') as test_f:
+    with open('tests/test_gtfs.zip') as test_f:
         return gtfs.to_dfs(test_f)
 
 

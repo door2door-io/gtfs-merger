@@ -3,14 +3,14 @@ from gtfsmerger.gtfs import GTFS
 
 
 def test_to_dfs(gtfs_obj):
-    assert gtfs_obj.keys() == [
+    assert set(gtfs_obj.keys()) == set([
         'agency',
         'stop_times',
         'stops',
         'shapes',
         'calendar_dates',
         'routes',
-        'trips']
+        'trips'])
     assert gtfs_obj['stops'].iloc[:5].stop_id.tolist() == [
         u'n1502-1',
         u'n62046-1',

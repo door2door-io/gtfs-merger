@@ -16,7 +16,7 @@ except ImportError:
 
 setup(
     name='gtfsmerger',
-    version='0.1.0',
+    version='0.1.1',
     description='Merge multiple GTFS files into one',
     author='Door2Door GmbH',
     author_email='chenghsun@door2door.io',
@@ -32,6 +32,7 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2.7'
+        'Programming Language :: Python :: 3.5'
+        'Programming Language :: Python :: 3.6'
     ]
 )
