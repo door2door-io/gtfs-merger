@@ -19,8 +19,8 @@ class GTFSMerger(object):
         'frequency': ['trip_id']
     }
 
-    def __init__(self, *files):
-        self.gtfs_objs = [GTFS().to_dfs(gtfs) for gtfs in files]
+    def merge_from_fpaths(self, fpaths):
+        self.gtfs_objs = [GTFS().to_dfs(fpath) for fpath in fpaths]
 
         tables = []
         for obj in self.gtfs_objs:

@@ -8,9 +8,9 @@ import pandas as pd
 class GTFS(object):
 
     @staticmethod
-    def to_dfs(gtfs_data):
+    def to_dfs(fpath):
         gtfs_obj = {}
-        zip_ref = ZipFile(gtfs_data.name)
+        zip_ref = ZipFile(fpath)
 
         for filename in zip_ref.namelist():
             filelabel = filename.replace('.txt', '')
