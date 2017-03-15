@@ -25,14 +25,13 @@ class GTFSMerger(object):
         self.gtfs_tables = None
 
     def merge_from_fpaths(self, fpaths):
-        self.gtfs_objs = [GTFS().to_dfs_from_fpath(fpath) for fpath in fpaths]
-        self.merged_gtfs_objs()
+        self.merged_gtfs_objs(GTFS.to_dfs_from_fpath, fpaths)
 
     def merge_from_bytes_list(self, bytes_objs):
-        self.gtfs_objs = [GTFS().to_dfs_from_bytes(bt) for bt in bytes_objs]
-        self.merged_gtfs_objs()
+        self.merged_gtfs_objs(GTFS.to_dfs_from_bytes, bytes_objs)
 
-    def merged_gtfs_objs(self):
+    def merged_gtfs_objs(self, to_dfs, objs):
+        self.gtfs_objs = [to_dfs(obj) for obj in objs]
         tables = []
         for obj in self.gtfs_objs:
             tables += obj.keys()
