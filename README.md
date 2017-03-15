@@ -1,4 +1,4 @@
-gtfs-merger ![build status](https://travis-ci.com/door2door-io/gtfs-merger.svg?token=jAe2MpoP1Smhms3S1hzy&branch=master) [![PyPI version](https://badge.fury.io/py/gtfsmerger.svg)](https://badge.fury.io/py/gtfsmerger)
+gtfs-merger ![build status](https://travis-ci.com/door2door-io/gtfs-merger.svg?token=jAe2MpoP1Smhms3S1hzy&branch=master)
 ===========
 A Python package to merge multiple GTFS files into one
 
