@@ -12,9 +12,16 @@ pip install gtfsmerger
 Use this module to merge two GTFS files
 ```python
 >>> from gtfsmerger import GTFSMerger
->>> with open('tests/test_gtfs.zip') as fa, open('tests/test_gtfs_2.zip') as fb:
->>>    merged_gtfs = GTFSMerger(fa, fb)
+>>> gtfs_merger = GTFSMerger()
+>>> gtfs_merger.merge_from_fpaths(['tests/test_gtfs.zip', 'tests/test_gtfs_2.zip'])
 ```
+Can also use zipfile bytes as input, this is useful for [Boto3](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.get_object)
+'''
+>>> merged_gtfs = GTFSMerger()
+>>> f_1 = open('tests/test_gtfs.zip', 'rb').read()
+>>> f_2 = open('tests/test_gtfs_2', 'rb').read()
+>>> merged_gtfs.merge_from_bytes_list([f_1, f_2])
+'''
 
 To write the merged result to a ZIP file
 ```python
