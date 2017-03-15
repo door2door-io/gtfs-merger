@@ -8,13 +8,21 @@ import pandas as pd
 class GTFS(object):
 
     @staticmethod
-    def to_dfs(gtfs_data):
-        gtfs_obj = {}
-        zip_ref = ZipFile(gtfs_data.name)
+    def to_dfs_from_fpath(fpath):
+        zip_ref = ZipFile(fpath)
+        return GTFS.zip_obj_to_dfs(zip_ref)
 
-        for filename in zip_ref.namelist():
+    @staticmethod
+    def to_dfs_from_bytes(bytes_obj):
+        zip_ref = ZipFile(BytesIO(bytes_obj))
+        return GTFS.zip_obj_to_dfs(zip_ref)
+
+    @staticmethod
+    def zip_obj_to_dfs(zip_obj):
+        gtfs_obj = {}
+        for filename in zip_obj.namelist():
             filelabel = filename.replace('.txt', '')
-            gtfs_obj[filelabel] = pd.read_csv(zip_ref.open(filename),
+            gtfs_obj[filelabel] = pd.read_csv(zip_obj.open(filename),
                                               encoding='utf-8-sig',
                                               dtype=str)
         return gtfs_obj
