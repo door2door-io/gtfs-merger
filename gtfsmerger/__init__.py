@@ -9,7 +9,7 @@ class GTFSMerger(object):
         'calendar': ['service_id'],
         'calendar_dates': ['service_id'],
         'stop_times': ['trip_id', 'stop_id'],
-        'stops': ['stop_id'],
+        'stops': ['stop_id', 'parent_station'],
         'shape': ['shape_id'],
         'trips': ['route_id', 'trip_id', 'service_id'],
         'transfer': ['from_stop_id', 'to_stop_id'],
@@ -47,7 +47,8 @@ class GTFSMerger(object):
             columns = cls.ref_id[ref]
             for col in columns:
                 try:
-                    gtfs[ref][col] = gtfs[ref][col].apply(lambda x: tag + x)
+                    gtfs[ref][col] = gtfs[ref][col].apply(
+                        lambda x: tag + x if not pd.isnull(x) else x)
                 except KeyError:
                     pass
 

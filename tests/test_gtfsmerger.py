@@ -1,4 +1,5 @@
 from gtfsmerger import GTFSMerger
+import pandas as pd
 
 
 def test_gtfs_merger(gtfs_merger):
@@ -8,6 +9,13 @@ def test_gtfs_merger(gtfs_merger):
         u'0-n1520-1',
         u'0-n1522-1',
         u'0-n1510']
+
+    assert gtfs_merger.merged['stops'].iloc[:4]['parent_station'].tolist() == [
+        '0-n1502', '0-n62046', '0-n1520', '0-n1522']
+
+    assert pd.isnull(gtfs_merger.merged['stops'].iloc[5][
+        'parent_station'])
+
     z_p = gtfs_merger.get_zipfile()
 
     assert set(z_p.namelist()) == set([
@@ -28,6 +36,14 @@ def test_gtfs_merger_from_bytes(gtfs_merger_from_bytes):
             u'0-n1520-1',
             u'0-n1522-1',
             u'0-n1510']
+
+    assert gtfs_merger_from_bytes.merged['stops'].iloc[:4][
+        'parent_station'].tolist() == [
+            '0-n1502', '0-n62046', '0-n1520', '0-n1522']
+
+    assert pd.isnull(gtfs_merger_from_bytes.merged['stops'].iloc[5][
+        'parent_station'])
+
     z_p = gtfs_merger_from_bytes.get_zipfile()
 
     assert set(z_p.namelist()) == set([
