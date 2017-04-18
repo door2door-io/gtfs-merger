@@ -20,8 +20,9 @@ def gtfs_obj_from_bytes():
 def gtfs_merger():
     _gtfs = GTFSMerger()
     _gtfs.merge_from_fpaths([
-    	'tests/test_gtfs.zip', 'tests/test_gtfs_2.zip'])
+        'tests/test_gtfs.zip', 'tests/test_gtfs_2.zip'])
     return _gtfs
+
 
 @pytest.fixture(scope='module')
 def gtfs_merger_from_bytes():
