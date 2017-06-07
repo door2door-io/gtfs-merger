@@ -1,12 +1,14 @@
 # Config file for automatic testing at travis-ci.org
 
+sudo: false
+
 language: python
 
 python:
   - "3.6"
 
 install:
-  - sudo apt-get update -y
+  - apt-get update -y
   - make install
 
 script:
