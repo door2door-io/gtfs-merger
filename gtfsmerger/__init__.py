@@ -4,25 +4,12 @@ from gtfsmerger.gtfs import GTFS
 
 class GTFSMerger(object):
 
-    ref_id = {
-        'agency': ['agency_id'],
-        'calendar': ['service_id'],
-        'calendar_dates': ['service_id'],
-        'stop_times': ['trip_id', 'stop_id'],
-        'stops': ['stop_id', 'parent_station'],
-        'shape': ['shape_id'],
-        'trips': ['route_id', 'trip_id', 'service_id'],
-        'transfer': ['from_stop_id', 'to_stop_id'],
-        'routes': ['route_id', 'agency_id'],
-        'fare_rule': ['fare_id', 'route_id'],
-        'fare_attribute': ['fare_id'],
-        'frequency': ['trip_id']
-    }
+    ref_columns = GTFS.ref_columns
 
     def __init__(self):
         self.merged = None
         self.gtfs_objs = None
-        self.gtfs_tables = None
+        self.gtfs_tables = set()
 
     def merge_from_fpaths(self, fpaths):
         self.merged_gtfs_objs(GTFS.to_dfs_from_fpath, fpaths)
@@ -32,20 +19,16 @@ class GTFSMerger(object):
 
     def merged_gtfs_objs(self, to_dfs, objs):
         self.gtfs_objs = [to_dfs(obj) for obj in objs]
-        tables = []
-        for obj in self.gtfs_objs:
-            tables += obj.keys()
-        self.gtfs_tables = set(tables)
         for cnt, gtfs in enumerate(self.gtfs_objs):
+            self.gtfs_tables.update(gtfs.keys())
             self.mod_ids(cnt, gtfs)
         self.merged = self.merge(self.gtfs_objs)
 
-    @classmethod
-    def mod_ids(cls, cnt, gtfs):
-        for ref, columns in cls.ref_id.items():
-            for col in columns:
+    def mod_ids(self, cnt, gtfs):
+        for ref in self.gtfs_tables:
+            for col in self.ref_columns:
                 try:
-                    gtfs[ref][col] = cls.tag_series(cnt, gtfs[ref][col])
+                    gtfs[ref][col] = self.tag_series(cnt, gtfs[ref][col])
                 except KeyError:
                     pass
 

@@ -60,7 +60,9 @@ def test_gtfs_merger_from_bytes(gtfs_merger_from_bytes):
 
 
 def test_mod_ids(gtfs_obj):
-    GTFSMerger.mod_ids(100, gtfs_obj)
+    gtfs_merger = GTFSMerger()
+    gtfs_merger.gtfs_tables = {'stops'}
+    gtfs_merger.mod_ids(100, gtfs_obj)
     assert gtfs_obj['stops'].iloc[:5]['stop_id'].tolist() == [
         u'100-n1502-1',
         u'100-n62046-1',
