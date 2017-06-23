@@ -16,7 +16,7 @@ except ImportError:
 
 setup(
     name='gtfsmerger',
-    version='0.1.3',
+    version='0.1.4',
     description='Merge multiple GTFS files into one',
     author='Door2Door GmbH',
     author_email='chenghsun@door2door.io',
