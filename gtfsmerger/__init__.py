@@ -42,15 +42,18 @@ class GTFSMerger(object):
 
     @classmethod
     def mod_ids(cls, cnt, gtfs):
-        tag = str(cnt) + '-'
-        for ref in cls.ref_id:
-            columns = cls.ref_id[ref]
+        for ref, columns in cls.ref_id.items():
             for col in columns:
                 try:
-                    gtfs[ref][col] = gtfs[ref][col].apply(
-                        lambda x: tag + x if not pd.isnull(x) else x)
+                    gtfs[ref][col] = cls.tag_series(cnt, gtfs[ref][col])
                 except KeyError:
                     pass
+
+    @staticmethod
+    def tag_series(tag, series):
+        return series.apply(
+            lambda x: '{}-{}'.format(tag, x) if not pd.isnull(x) else x
+        )
 
     def merge(self, gtfs_objs):
         merged_gtfs = {}
