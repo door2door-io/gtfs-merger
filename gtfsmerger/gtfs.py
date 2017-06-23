@@ -9,7 +9,7 @@ class GTFS(object):
 
     ref_columns = {'agency_id', 'service_id', 'fare_id', 'route_id',
                    'trip_id', 'shape_id', 'stop_id', 'parent_station',
-                   'trip_id', 'from_stop_id', 'to_stop_id'}
+                   'from_stop_id', 'to_stop_id'}
 
     @classmethod
     def to_dfs_from_fpath(cls, fpath):
