@@ -7,24 +7,30 @@ import pandas as pd
 
 class GTFS(object):
 
-    @staticmethod
-    def to_dfs_from_fpath(fpath):
+    ref_columns = {'agency_id', 'service_id', 'fare_id', 'route_id',
+                   'trip_id', 'shape_id', 'stop_id', 'parent_station',
+                   'from_stop_id', 'to_stop_id'}
+
+    @classmethod
+    def to_dfs_from_fpath(cls, fpath):
         zip_ref = ZipFile(fpath)
-        return GTFS.zip_obj_to_dfs(zip_ref)
+        return cls.zip_obj_to_dfs(zip_ref)
 
-    @staticmethod
-    def to_dfs_from_bytes(bytes_obj):
+    @classmethod
+    def to_dfs_from_bytes(cls, bytes_obj):
         zip_ref = ZipFile(BytesIO(bytes_obj))
-        return GTFS.zip_obj_to_dfs(zip_ref)
+        return cls.zip_obj_to_dfs(zip_ref)
 
-    @staticmethod
-    def zip_obj_to_dfs(zip_obj):
+    @classmethod
+    def zip_obj_to_dfs(cls, zip_obj):
         gtfs_obj = {}
+        # Set dtype to string for reference columns.
+        dtype = {c: str for c in cls.ref_columns}
         for filename in zip_obj.namelist():
             filelabel = filename.replace('.txt', '')
             gtfs_obj[filelabel] = pd.read_csv(zip_obj.open(filename),
                                               encoding='utf-8-sig',
-                                              dtype=str)
+                                              dtype=dtype)
         return gtfs_obj
 
     @staticmethod

@@ -12,8 +12,8 @@ def gtfs_obj():
 @pytest.fixture(scope="module")
 def gtfs_obj_from_bytes():
     gtfs = GTFS()
-    bt = open('tests/test_gtfs.zip', 'rb').read()
-    return gtfs.to_dfs_from_bytes(bt)
+    bt_ = open('tests/test_gtfs.zip', 'rb').read()
+    return gtfs.to_dfs_from_bytes(bt_)
 
 
 @pytest.fixture(scope='module')
@@ -27,7 +27,7 @@ def gtfs_merger():
 @pytest.fixture(scope='module')
 def gtfs_merger_from_bytes():
     _gtfs = GTFSMerger()
-    bt = open('tests/test_gtfs.zip', 'rb').read()
+    bt_ = open('tests/test_gtfs.zip', 'rb').read()
     bt_2 = open('tests/test_gtfs_2.zip', 'rb').read()
-    _gtfs.merge_from_bytes_list([bt, bt_2])
+    _gtfs.merge_from_bytes_list([bt_, bt_2])
     return _gtfs
