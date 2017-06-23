@@ -28,7 +28,9 @@ class GTFSMerger(object):
         for ref in self.gtfs_tables:
             for col in self.ref_columns:
                 try:
-                    gtfs[ref][col] = self.tag_series(cnt, gtfs[ref][col])
+                    gtfs[ref].loc[:, col] = self.tag_series(
+                        cnt, gtfs[ref].loc[:, col]
+                    )
                 except KeyError:
                     pass
 
