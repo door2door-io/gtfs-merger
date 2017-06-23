@@ -23,8 +23,7 @@ class GTFS(object):
         for filename in zip_obj.namelist():
             filelabel = filename.replace('.txt', '')
             gtfs_obj[filelabel] = pd.read_csv(zip_obj.open(filename),
-                                              encoding='utf-8-sig',
-                                              dtype=str)
+                                              encoding='utf-8-sig')
         return gtfs_obj
 
     @staticmethod
