@@ -2,17 +2,21 @@ import pandas as pd
 from gtfsmerger.gtfs import GTFS
 
 
-def post_process(func):
+def convert_datetime(func):
     def wrapper(self, gtfs_obj):
+        gtfs_obj_column = {
+            'calendar_dates': ['date'],
+            'calendar': ['start_date', 'end_date']
+        }
         merged = func(self, gtfs_obj)
-        if 'calendar_dates' in merged:
-            merged['calendar_dates'].loc[:, 'date'] = pd.to_datetime(merged[
-                'calendar_dates'].loc[:, 'date'].astype(str))
-        if 'calendar' in merged:
-            merged['calendar'].loc[:, 'start_date'] = pd.to_datetime(merged[
-                'calendar'].loc[:, 'start_date'].astype(str))
-            merged['calendar'].loc[:, 'end_date'] = pd.to_datetime(merged[
-                'calendar'].loc[:, 'end_date'].astype(str))
+
+        for gtfs_obj, columns in gtfs_obj_column.items():
+            for column in columns:
+                try:
+                    merged[gtfs_obj].loc[:, column] = pd.to_datetime(merged[
+                        gtfs_obj].loc[:, column].astype(str))
+                except KeyError:
+                    pass
         return merged
     return wrapper
 
@@ -55,7 +59,7 @@ class GTFSMerger(object):
             lambda x: '{}-{}'.format(tag, x) if not pd.isnull(x) else x
         )
 
-    @post_process
+    @convert_datetime
     def merge(self, gtfs_objs):
         merged_gtfs = {}
         for ref in self.gtfs_tables:
