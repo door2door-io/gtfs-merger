@@ -2,6 +2,21 @@ import pandas as pd
 from gtfsmerger.gtfs import GTFS
 
 
+def post_process(func):
+    def wrapper(self, gtfs_obj):
+        merged = func(self, gtfs_obj)
+        if 'calendar_dates' in merged:
+            merged['calendar_dates'].loc[:, 'date'] = merged[
+                'calendar_dates'].loc[:, 'date'].astype(str)
+        if 'calendar' in merged:
+            merged['calendar'].loc[:, 'start_date'] = merged[
+                'calendar'].loc[:, 'start_date'].astype(str)
+            merged['calendar'].loc[:, 'end_date'] = merged[
+                'calendar'].loc[:, 'end_date'].astype(str)
+        return merged
+    return wrapper
+
+
 class GTFSMerger(object):
 
     ref_columns = GTFS.ref_columns
@@ -40,6 +55,7 @@ class GTFSMerger(object):
             lambda x: '{}-{}'.format(tag, x) if not pd.isnull(x) else x
         )
 
+    @post_process
     def merge(self, gtfs_objs):
         merged_gtfs = {}
         for ref in self.gtfs_tables:
