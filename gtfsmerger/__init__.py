@@ -6,13 +6,13 @@ def post_process(func):
     def wrapper(self, gtfs_obj):
         merged = func(self, gtfs_obj)
         if 'calendar_dates' in merged:
-            merged['calendar_dates'].loc[:, 'date'] = merged[
-                'calendar_dates'].loc[:, 'date'].astype(str)
+            merged['calendar_dates'].loc[:, 'date'] = pd.to_datetime(merged[
+                'calendar_dates'].loc[:, 'date'].astype(str))
         if 'calendar' in merged:
-            merged['calendar'].loc[:, 'start_date'] = merged[
-                'calendar'].loc[:, 'start_date'].astype(str)
-            merged['calendar'].loc[:, 'end_date'] = merged[
-                'calendar'].loc[:, 'end_date'].astype(str)
+            merged['calendar'].loc[:, 'start_date'] = pd.to_datetime(merged[
+                'calendar'].loc[:, 'start_date'].astype(str))
+            merged['calendar'].loc[:, 'end_date'] = pd.to_datetime(merged[
+                'calendar'].loc[:, 'end_date'].astype(str))
         return merged
     return wrapper
 
