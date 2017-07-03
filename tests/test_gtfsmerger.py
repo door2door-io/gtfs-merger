@@ -1,7 +1,7 @@
 from gtfsmerger import GTFSMerger
 import pandas as pd
 from pandas.util import testing as tm
-
+import numpy as np
 import pytest
 
 
@@ -20,6 +20,9 @@ def test_gtfs_merger(gtfs_merger):
         'parent_station'])
 
     z_p = gtfs_merger.get_zipfile()
+
+    assert gtfs_merger.merged['calendar_dates'][
+        'date'].dtype == np.dtype('<M8[ns]')
 
     assert set(z_p.namelist()) == set([
         'agency.txt',
@@ -48,6 +51,9 @@ def test_gtfs_merger_from_bytes(gtfs_merger_from_bytes):
         'parent_station'])
 
     z_p = gtfs_merger_from_bytes.get_zipfile()
+
+    assert gtfs_merger_from_bytes.merged['calendar_dates'][
+        'date'].dtype == np.dtype('<M8[ns]')
 
     assert set(z_p.namelist()) == set([
         'agency.txt',
