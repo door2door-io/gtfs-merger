@@ -2,6 +2,25 @@ import pandas as pd
 from gtfsmerger.gtfs import GTFS
 
 
+def convert_datetime(func):
+    def wrapper(self, gtfs_obj):
+        gtfs_obj_column = {
+            'calendar_dates': ['date'],
+            'calendar': ['start_date', 'end_date']
+        }
+        merged = func(self, gtfs_obj)
+
+        for gtfs_obj, columns in gtfs_obj_column.items():
+            for column in columns:
+                try:
+                    merged[gtfs_obj].loc[:, column] = pd.to_datetime(merged[
+                        gtfs_obj].loc[:, column].astype(str))
+                except KeyError:
+                    pass
+        return merged
+    return wrapper
+
+
 class GTFSMerger(object):
 
     ref_columns = GTFS.ref_columns
@@ -40,6 +59,7 @@ class GTFSMerger(object):
             lambda x: '{}-{}'.format(tag, x) if not pd.isnull(x) else x
         )
 
+    @convert_datetime
     def merge(self, gtfs_objs):
         merged_gtfs = {}
         for ref in self.gtfs_tables:
