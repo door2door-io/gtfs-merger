@@ -27,7 +27,9 @@ class GTFS(object):
         # Set dtype to string for reference columns.
         dtype = {c: str for c in cls.ref_columns}
         for filename in zip_obj.namelist():
-            filelabel = filename.replace('.txt', '')
+            if not filename.endswith('.txt'):
+                continue
+            filelabel = filename[:-4]
             gtfs_obj[filelabel] = pd.read_csv(zip_obj.open(filename),
                                               encoding='utf-8-sig',
                                               dtype=dtype)
